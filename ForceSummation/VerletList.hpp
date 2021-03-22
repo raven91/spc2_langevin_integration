@@ -1,0 +1,13 @@
+//
+// Created by Nikita Kruk on 22.01.20.
+//
+
+#ifndef SPC2ODEINTEGRATION_VERLETLIST_HPP
+#define SPC2ODEINTEGRATION_VERLETLIST_HPP
+
+class VerletList
+{
+
+};
+
+#endif //SPC2ODEINTEGRATION_VERLETLIST_HPP
