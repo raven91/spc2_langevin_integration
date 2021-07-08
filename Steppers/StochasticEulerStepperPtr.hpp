@@ -27,10 +27,7 @@ class StochasticEulerStepperPtr
   {
 
   }
-  ~StochasticEulerStepperPtr()
-  {
-
-  }
+  ~StochasticEulerStepperPtr() = default;
 
   void DoStep(ChimeraSystemPtr &system, Real *const system_state, Real t, Real dt)
   {

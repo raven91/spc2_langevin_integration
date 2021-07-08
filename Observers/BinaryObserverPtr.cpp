@@ -20,13 +20,14 @@ BinaryObserverPtr::BinaryObserverPtr(ThreadSharedMemory *thread,
                                      Real rho,
                                      Real alpha,
                                      Real D_phi,
+                                     Real rho_0,
                                      PeriodicBoundaryConditions &pbc_config,
                                      Real dt,
                                      int trial) :
     thread_(thread),
     pbc_config_(pbc_config),
     output_time_counter_{0, 0},
-    output_time_threshold_{100, 100} // mod 1 - save at every dt
+    output_time_threshold_{10, 10} // mod 1 - save at every dt
 {
   integration_step_timer_ = std::chrono::system_clock::now();
 
@@ -37,13 +38,13 @@ BinaryObserverPtr::BinaryObserverPtr(ThreadSharedMemory *thread,
 #elif defined(__linux__)
   std::string file_folder("/home/nikita/Documents/spc2OdeIntegration/");
 #elif defined(__APPLE__)
-  std::string file_folder("/Users/nikita/Documents/Projects/spc2/spc2OdeIntegration/");
+  std::string file_folder("/Users/nikita/Documents/Projects/spc2/spc2OdeIntegration/traveling_bands/");
 //  std::string file_folder("/Volumes/Kruk/spc2/spc2OdeIntegration/continued/");
 #endif
 
   std::ostringstream simulation_file_name_buffer;
   simulation_file_name_buffer << file_folder << "v0_" << v_0 << "_sigma_" << sigma << "_rho_" << rho
-                              << "_alpha_" << alpha << "_Dphi_" << D_phi << "_N_" << kN;
+                              << "_alpha_" << alpha << "_Dphi_" << D_phi << "_N_" << kN << "_rho0_" << rho_0;
   simulation_file_name_buffer << "_" << 0;
   simulation_file_name_buffer << "_" << trial << ".bin";
   simulation_file_name_ = simulation_file_name_buffer.str();
@@ -56,7 +57,8 @@ BinaryObserverPtr::BinaryObserverPtr(ThreadSharedMemory *thread,
 
   std::ostringstream summary_statistics_file_name_buffer;
   summary_statistics_file_name_buffer << file_folder << "summary_statistics_" << "v0_" << v_0 << "_sigma_" << sigma
-                                      << "_rho_" << rho << "_alpha_" << alpha << "_Dphi_" << D_phi << "_N_" << kN;
+                                      << "_rho_" << rho << "_alpha_" << alpha << "_Dphi_" << D_phi << "_N_" << kN
+                                      << "_rho0_" << rho_0;
   summary_statistics_file_name_buffer << "_" << 0;
   summary_statistics_file_name_buffer << "_" << trial << ".txt";
   summary_statistics_file_name_ = summary_statistics_file_name_buffer.str();

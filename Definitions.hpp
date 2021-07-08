@@ -17,8 +17,9 @@
 typedef double Real;
 typedef float RealOutput;
 
-const int kN = 10000;
+const int kN = 8192;
 const int kS = 3;
+const Real kL = 64.0;
 
 extern std::mt19937 mersenne_twister_generator;
 

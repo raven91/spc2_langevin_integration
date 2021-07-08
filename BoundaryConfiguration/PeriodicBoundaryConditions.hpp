@@ -27,8 +27,8 @@ class PeriodicBoundaryConditions
   void ApplyPeriodicBoundaryConditions(std::vector<Real> &system_state);
   void ApplyPeriodicBoundaryConditions(Real *const system_state, long size);
 
-  Real GetXSize();
-  Real GetYSize();
+  Real GetXSize() const;
+  Real GetYSize() const;
 
  private:
 

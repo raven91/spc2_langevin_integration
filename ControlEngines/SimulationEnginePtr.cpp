@@ -17,7 +17,7 @@
 
 SimulationEnginePtr::SimulationEnginePtr(ThreadSharedMemory *thread) :
     thread_(thread),
-    pbc_config_(thread, 1.0, 1.0),
+    pbc_config_(thread, kL, kL),
     system_state_size_(kS * kN)
 {
   system_state_ = new Real[system_state_size_];
@@ -34,13 +34,13 @@ void SimulationEnginePtr::InitializeRandomSystemState()
   {
     const Real two_pi = 2.0 * M_PI;
 
-    std::uniform_real_distribution<Real> unif_real_dist_01(0.0, 1.0);
+    std::uniform_real_distribution<Real> unif_real_dist_0L(0.0, kL);
     std::uniform_real_distribution<Real> unif_real_dist_02pi(0.0, two_pi);
 
     for (int i = 0; i < kN; ++i)
     {
-      system_state_[kS * i] = unif_real_dist_01(mersenne_twister_generator) * 1.0;
-      system_state_[kS * i + 1] = unif_real_dist_01(mersenne_twister_generator) * 1.0;
+      system_state_[kS * i] = unif_real_dist_0L(mersenne_twister_generator);
+      system_state_[kS * i + 1] = unif_real_dist_0L(mersenne_twister_generator);
       system_state_[kS * i + 2] = unif_real_dist_02pi(mersenne_twister_generator);
     } // i
 
@@ -79,15 +79,16 @@ void SimulationEnginePtr::RunChimeraSimulation()
     std::cout << "simulation started with " << thread_->GetNumberOfMpichThreads() << " (MPICH) threads" << std::endl;
   }
 
-  Real v_0 = 1.0;
+  Real v_0 = 2.0;
   Real sigma = 1.0;
-  Real rho = 0.01;
+  Real rho = 1.0;
   Real alpha = 0.0;
-  Real D_phi = 0.01;
+  Real D_phi = 0.4;
+  Real rho_0 = 2.0;
 
   Real t_0 = 0.0;
-  Real t_1 = 20.0;
-  Real dt = 0.01;
+  Real t_1 = 100000.0;
+  Real dt = 0.1;
 
   int trial = 0;
 //  for (int trial = 0; trial < 10; ++trial)
@@ -96,8 +97,8 @@ void SimulationEnginePtr::RunChimeraSimulation()
 //    InitializeSystemStateFromPreviousSolution("/Volumes/Kruk/spc2/spc2OdeIntegration/from_uniform_initial_condition/v0_0.01_sigma_1_rho_0.01_alpha_1.3_Dphi_0.02_N_50000_0_0.bin");
 //    RungeKutta4StepperPtr stepper(thread_);
     StochasticRungeKuttaStepperPtr stepper(thread_);
-    ChimeraSystemPtr chimera_system(thread_, v_0, sigma, rho, alpha, D_phi, pbc_config_);
-    BinaryObserverPtr binary_observer(thread_, v_0, sigma, rho, alpha, D_phi, pbc_config_, dt, trial);
+    ChimeraSystemPtr chimera_system(thread_, v_0, sigma, rho, alpha, D_phi, rho_0, pbc_config_);
+    BinaryObserverPtr binary_observer(thread_, v_0, sigma, rho, alpha, D_phi, rho_0, pbc_config_, dt, trial);
 //    IntegrateConst(stepper, chimera_system, t_0, t_1, dt, binary_observer);
 
     Real t = t_0;

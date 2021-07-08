@@ -23,6 +23,7 @@ class BinaryObserver
                           Real rho,
                           Real alpha,
                           Real D_phi,
+                          Real rho_0,
                           PeriodicBoundaryConditions &pbc_config,
                           Real dt,
                           int trial);

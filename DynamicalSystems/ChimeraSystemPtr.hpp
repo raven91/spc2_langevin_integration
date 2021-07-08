@@ -19,6 +19,7 @@ class ChimeraSystemPtr
                             Real rho,
                             Real alpha,
                             Real D_phi,
+                            Real rho_0,
                             PeriodicBoundaryConditions &pbc_config);
   ~ChimeraSystemPtr();
 
@@ -79,6 +80,7 @@ class ChimeraSystemPtr
   Real rho_squared_;
   Real alpha_;
   Real D_phi_;
+  Real rho_0_;
 
   Real *rk_system_state_;
   std::vector<Real> alignment_force_;

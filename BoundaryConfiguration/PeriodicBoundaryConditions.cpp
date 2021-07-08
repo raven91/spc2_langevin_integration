@@ -140,12 +140,12 @@ void PeriodicBoundaryConditions::ApplyPeriodicBoundaryConditions(Real *const sys
   } // i
 }
 
-Real PeriodicBoundaryConditions::GetXSize()
+Real PeriodicBoundaryConditions::GetXSize() const
 {
   return x_size_;
 }
 
-Real PeriodicBoundaryConditions::GetYSize()
+Real PeriodicBoundaryConditions::GetYSize() const
 {
   return y_size_;
 }

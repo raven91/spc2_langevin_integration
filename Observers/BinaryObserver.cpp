@@ -18,6 +18,7 @@ BinaryObserver::BinaryObserver(Thread *thread,
                                Real rho,
                                Real alpha,
                                Real D_phi,
+                               Real rho_0,
                                PeriodicBoundaryConditions &pbc_config,
                                Real dt,
                                int trial) :
@@ -45,7 +46,7 @@ BinaryObserver::BinaryObserver(Thread *thread,
 
     std::ostringstream simulation_file_name_buffer;
     simulation_file_name_buffer << file_folder << "v0_" << v_0 << "_sigma_" << sigma << "_rho_" << rho
-                                << "_alpha_" << alpha << "_Dphi_" << D_phi << "_N_" << kN;
+                                << "_alpha_" << alpha << "_Dphi_" << D_phi << "_N_" << kN << "_rho0_" << rho_0;
 #if defined(MPI_PARAMETER_SCAN)
     simulation_file_name_buffer << "_" << mpi_thread_rank;
 #else
@@ -60,7 +61,8 @@ BinaryObserver::BinaryObserver(Thread *thread,
 
     std::ostringstream summary_statistics_file_name_buffer;
     summary_statistics_file_name_buffer << file_folder << "summary_statistics_" << "v0_" << v_0 << "_sigma_" << sigma
-                                        << "_rho_" << rho << "_alpha_" << alpha << "_Dphi_" << D_phi << "_N_" << kN;
+                                        << "_rho_" << rho << "_alpha_" << alpha << "_Dphi_" << D_phi << "_N_" << kN
+                                        << "_rho0_" << rho_0;
 #if defined(MPI_PARAMETER_SCAN)
     summary_statistics_file_name_buffer << "_" << mpi_thread_rank;
 #else

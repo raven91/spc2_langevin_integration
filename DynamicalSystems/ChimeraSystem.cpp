@@ -14,6 +14,7 @@ ChimeraSystem::ChimeraSystem(Thread *thread,
                              Real rho,
                              Real alpha,
                              Real D_phi,
+                             Real rho_0,
                              PeriodicBoundaryConditions &pbc_config) :
     thread_(thread),
     pbc_config_(pbc_config),
@@ -23,12 +24,13 @@ ChimeraSystem::ChimeraSystem(Thread *thread,
     rho_squared_(rho * rho),
     alpha_(alpha),
     D_phi_(D_phi),
+    rho_0_(rho_0),
     alignment_force_(kN, 0.0),
     neighborhood_cardinality_(kN, 0.0),
-    x_size_(1.0),
-    y_size_(1.0),
-    num_subcells_x_(int(1.0 / rho)),
-    num_subcells_y_(int(1.0 / rho))
+    x_size_(kL),
+    y_size_(kL),
+    num_subcells_x_(int(kL / rho)),
+    num_subcells_y_(int(kL / rho))
 {
   pre_linked_list_ = std::vector<int>(kN, 0);
   linked_list_ = std::vector<std::vector<int>>(num_subcells_x_ * num_subcells_y_, std::vector<int>());
@@ -85,7 +87,7 @@ void ChimeraSystem::EvaluateRhs(std::vector<Real> &system_state,
 //		EvaluateInteractionsWithVerletNeighborList(system_state, k_prev, k_next, k_coef, dt);
 //	}
 //	else
-  if (rho_ <= 0.25)
+  if (rho_ <= 0.25 * kL)
   {
     EvaluateInteractionsWithLinkedList(system_state, k_prev, k_next, k_coef, dt);
   }
@@ -102,7 +104,7 @@ void ChimeraSystem::EvaluateRhs(std::vector<Real> &system_state,
                                 std::vector<std::vector<Real>> &additional_derivative,
                                 Real dt)
 {
-  if (rho_ <= 0.25)
+  if (rho_ <= 0.25 * kL)
   {
     EvaluateInteractionsWithLinkedList(system_state, derivative, additional_derivative, dt);
   } else

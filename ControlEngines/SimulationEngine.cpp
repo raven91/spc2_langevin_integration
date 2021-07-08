@@ -17,7 +17,7 @@
 
 SimulationEngine::SimulationEngine(Thread *thread) :
     thread_(thread),
-    pbc_config_(thread, 1.0, 1.0),
+    pbc_config_(thread, kL, kL),
     system_state_(kS * kN, 0.0)
 {
 
@@ -34,13 +34,13 @@ void SimulationEngine::InitializeRandomSystemState()
   {
     const Real two_pi = 2.0 * M_PI;
 
-    std::uniform_real_distribution<Real> unif_real_dist_01(0.0, 1.0);
+    std::uniform_real_distribution<Real> unif_real_dist_0L(0.0, kL);
     std::uniform_real_distribution<Real> unif_real_dist_02pi(0.0, two_pi);
 
     for (int i = 0; i < kN; ++i)
     {
-      system_state_[kS * i] = unif_real_dist_01(mersenne_twister_generator);
-      system_state_[kS * i + 1] = unif_real_dist_01(mersenne_twister_generator);
+      system_state_[kS * i] = unif_real_dist_0L(mersenne_twister_generator);
+      system_state_[kS * i + 1] = unif_real_dist_0L(mersenne_twister_generator);
       system_state_[kS * i + 2] = unif_real_dist_02pi(mersenne_twister_generator);
     } // i
 
@@ -91,6 +91,7 @@ void SimulationEngine::RunSimulation()
   Real rho = 0.05;
   Real alpha = 1.54;
   Real D_phi = 0.01;
+  Real rho_0 = 1.0;
 #endif
 
   Real t_0 = 0.0;
@@ -106,8 +107,8 @@ void SimulationEngine::RunSimulation()
 //	InitializeSystemStateFromFile(std::string("/Users/nikita/Documents/spc2/spc2ContinuationMethod/startup/localized_initial_condition_sigma_1_rho_0.3_alpha_1.54_Dphi_0_N_1000_0.bin"));
     StochasticRungeKuttaStepper stepper(thread_);
 //    RungeKutta4Stepper stepper(thread_);
-    ChimeraSystem chimera_system(thread_, v_0, sigma, rho, alpha, D_phi, pbc_config_);
-    BinaryObserver binary_observer(thread_, v_0, sigma, rho, alpha, D_phi, pbc_config_, dt, trial);
+    ChimeraSystem chimera_system(thread_, v_0, sigma, rho, alpha, D_phi, rho_0, pbc_config_);
+    BinaryObserver binary_observer(thread_, v_0, sigma, rho, alpha, D_phi, rho_0, pbc_config_, dt, trial);
 
     Real t = t_0;
     binary_observer.SaveSystemState(system_state_, t);
