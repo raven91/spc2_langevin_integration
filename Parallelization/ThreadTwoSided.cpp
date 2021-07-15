@@ -36,10 +36,10 @@ bool ThreadTwoSided::IsRoot() const
 void ThreadTwoSided::SynchronizeVector(std::vector<Real> &vec)
 {
   std::vector<Real> buf(kN * kS, 0.0);
-  SynchronizeVectorThoughBuffer(vec, buf);
+  SynchronizeVectorThroughBuffer(vec, buf);
 }
 
-void ThreadTwoSided::SynchronizeVectorThoughBuffer(std::vector<Real> &vec, std::vector<Real> &buf)
+void ThreadTwoSided::SynchronizeVectorThroughBuffer(std::vector<Real> &vec, std::vector<Real> &buf)
 {
   MPI_Gather(&vec[rank_ * number_of_particles_per_mpich_thread_ * kS],
              number_of_particles_per_mpich_thread_ * kS,

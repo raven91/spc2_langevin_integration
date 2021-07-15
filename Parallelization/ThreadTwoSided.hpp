@@ -17,7 +17,7 @@ class ThreadTwoSided : public Thread
   bool IsRoot() const override;
 
   void SynchronizeVector(std::vector<Real> &vec) override;
-  void SynchronizeVectorThoughBuffer(std::vector<Real> &vec, std::vector<Real> &buf) override;
+  void SynchronizeVectorThroughBuffer(std::vector<Real> &vec, std::vector<Real> &buf) override;
   void BroadcastVector(std::vector<Real> &vec) override;
   void SynchronizePrelinkedList(std::vector<int> &pre_linked_list) const override;
 

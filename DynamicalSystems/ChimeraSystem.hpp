@@ -67,7 +67,7 @@ class ChimeraSystem
   Real alpha() const
   { return alpha_; }
 
-  bool last_coefficient_;
+  bool should_accumulate_max_displacement_;
 
  private:
 

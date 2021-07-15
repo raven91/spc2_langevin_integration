@@ -24,7 +24,7 @@ class Thread
   virtual bool IsRoot() const;
 
   virtual void SynchronizeVector(std::vector<Real> &vec);
-  virtual void SynchronizeVectorThoughBuffer(std::vector<Real> &vec, std::vector<Real> &buf);
+  virtual void SynchronizeVectorThroughBuffer(std::vector<Real> &vec, std::vector<Real> &buf);
   virtual void BroadcastVector(std::vector<Real> &vec);
   virtual void SynchronizePrelinkedList(std::vector<int> &pre_linked_list) const;
 

@@ -125,7 +125,7 @@ void ThreadSharedMemory::SynchronizeVector(Real *const vec, long size)
   MPI_Win_free(&win);
 }
 
-void ThreadSharedMemory::SynchronizeVectorThoughBuffer(std::vector<Real> &vec, std::vector<Real> &buf)
+void ThreadSharedMemory::SynchronizeVectorThroughBuffer(std::vector<Real> &vec, std::vector<Real> &buf)
 {
 
 }

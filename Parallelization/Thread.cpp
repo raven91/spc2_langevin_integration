@@ -56,7 +56,7 @@ void Thread::SynchronizeVector(std::vector<Real> &vec)
 
 }
 
-void Thread::SynchronizeVectorThoughBuffer(std::vector<Real> &vec, std::vector<Real> &buf)
+void Thread::SynchronizeVectorThroughBuffer(std::vector<Real> &vec, std::vector<Real> &buf)
 {
 
 }

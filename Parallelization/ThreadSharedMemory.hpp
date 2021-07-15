@@ -28,7 +28,7 @@ class ThreadSharedMemory : public Thread
 
   void SynchronizeVector(std::vector<Real> &vec) override;
   void SynchronizeVector(Real *const vec, long size);
-  void SynchronizeVectorThoughBuffer(std::vector<Real> &vec, std::vector<Real> &buf) override;
+  void SynchronizeVectorThroughBuffer(std::vector<Real> &vec, std::vector<Real> &buf) override;
   void SynchronizeVectorThroughoutClusters(Real *const vec);
   void SynchronizeVectorThroughoutClusters(int *const vec);
   void BroadcastVector(std::vector<Real> &vec) override;

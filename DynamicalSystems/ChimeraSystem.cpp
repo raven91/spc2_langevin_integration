@@ -50,7 +50,7 @@ ChimeraSystem::ChimeraSystem(Thread *thread,
 //	};
 
   // Verlet neighbor list
-  last_coefficient_ = true;
+  should_accumulate_max_displacement_ = false; // is switched on in a stepper
   r_min_ = rho;
   r_max_ = r_min_ + 2.0 * 1 * 0.01;//2 * k * dt
   should_update_lists_ = true;
@@ -879,7 +879,7 @@ void ChimeraSystem::EvaluateInteractionsWithVerletNeighborList(std::vector<Real>
     }
   }
 
-  if (last_coefficient_)
+  if (should_accumulate_max_displacement_)
   {
 //	Real max = 0.0;
 //	Real dist = 0.0;
@@ -891,7 +891,7 @@ void ChimeraSystem::EvaluateInteractionsWithVerletNeighborList(std::vector<Real>
 //			max = dist;
 //		}
 //	}
-    accumulated_displacement_ += 1.0 * dt;
+    accumulated_displacement_ += v_0_ * dt;
 //	if (mpi_thread_rank == mpi_root_rank)
 //		std::cout << "accumulated_displacement_ = " << accumulated_displacement_ << ", r_max_ = " << r_max_ << ", r_min_ = " << r_min_ << std::endl;
     if (accumulated_displacement_ > 0.5 * (r_max_ - r_min_))
